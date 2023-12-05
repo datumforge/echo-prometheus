@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	echoPrometheus "github.com/globocom/echo-prometheus"
-	"github.com/labstack/echo/v4"
+	echoPrometheus "github.com/datumforge/echo-prometheus/v5"
+	echo "github.com/datumforge/echox"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
@@ -17,5 +17,5 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Error(e.Start(":1323"))
 }

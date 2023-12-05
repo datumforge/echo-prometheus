@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/labstack/echo/v4"
+	echo "github.com/datumforge/echox"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/stretchr/testify/assert"
 )
@@ -17,7 +17,7 @@ func TestMetric(t *testing.T) {
 	e.Use(MetricsMiddleware())
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 
-	request := httptest.NewRequest(echo.GET, "/metrics", nil)
+	request := httptest.NewRequest(http.MethodGet, "/metrics", nil)
 	recorder := httptest.NewRecorder()
 
 	//action
@@ -44,7 +44,7 @@ func TestMetricWithCustomConfig(t *testing.T) {
 	e.Use(MetricsMiddlewareWithConfig(configMetrics))
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
 
-	request := httptest.NewRequest(echo.GET, "/metrics", nil)
+	request := httptest.NewRequest(http.MethodGet, "/metrics", nil)
 	recorder := httptest.NewRecorder()
 
 	//action
