@@ -2,10 +2,9 @@ package echoprometheus
 
 import (
 	"net/http"
-	"reflect"
 	"strconv"
 
-	echo "github.com/labstack/echo/v4"
+	echo "github.com/datumforge/echox"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )
@@ -65,8 +64,8 @@ func normalizeHTTPStatus(statusCode int) string {
 	}
 }
 
-func isNotFoundHandler(handler echo.HandlerFunc) bool {
-	return reflect.ValueOf(handler).Pointer() == reflect.ValueOf(echo.NotFoundHandler).Pointer()
+func isNotFoundHandler(path string) bool {
+	return path == echo.RouteNotFound
 }
 
 // NewConfig returns a new config with default values
@@ -102,7 +101,7 @@ func MetricsMiddlewareWithConfig(config Config) echo.MiddlewareFunc {
 			path := context.Path()
 
 			// to avoid attack high cardinality of 404
-			if isNotFoundHandler(context.Handler()) {
+			if isNotFoundHandler(context.Path()) {
 				path = notFoundPath
 			}
 
